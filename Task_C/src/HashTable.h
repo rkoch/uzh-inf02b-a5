@@ -5,6 +5,9 @@
  *
  *  Algorithms and Data structures
  *  Author: Genc Mazlami
+ *
+ *  Authored by Remo Koch
+ *  Public repository at https://github.com/rkoch/uzh-inf02b-a5
  */
 
 #ifndef hash_tables_HashTable_h
@@ -15,24 +18,26 @@
 
 const int TABLE_SIZE = 15;
 
-class HashTable{
-    
-public:
-    
-    HashTable();
-    int hashfunction(int key_);
-    Item* get(int key_);
-    void put(Item* item);
-    Item* getQuadratic(int key_);
-    void putQuadratic(Item* item);
-    void printContent();
-    
-private:
-    
-    int factor_a;
-    int factor_b;
+class HashTable {
 
-    Item** table;
+public:
+
+	HashTable();
+
+	int hashfunction(int key_);
+	Item* get(int key_);
+	void put(Item* item);
+	Item* getQuadratic(int key_);
+	void putQuadratic(Item* item);
+	void printContent();
+
+private:
+
+	int factor_a;
+	int factor_b;
+
+	Item** table;
+
 };
 
 #endif

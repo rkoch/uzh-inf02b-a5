@@ -5,32 +5,30 @@
  *
  *  Algorithms and Data structures
  *  Author: Genc Mazlami
+ *
+ *  Authored by Remo Koch
+ *  Public repository at https://github.com/rkoch/uzh-inf02b-a5
  */
 
 #ifndef hash_tables_Item_h
 #define hash_tables_Item_h
 
-
 #include <string>
 
+class Item {
 
-class Item{
-    
 public:
-    
-    Item(int key_, std::string name_);
-    std::string getName();
-    int getKey();
-    
+
+	Item(int key_, std::string name_);
+
+	std::string getName();
+	int getKey();
+
 private:
-    
-    std::string name;
-    int key;
+
+	std::string name;
+	int key;
+
 };
-
-
-
-
-
 
 #endif

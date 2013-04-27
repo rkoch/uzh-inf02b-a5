@@ -12,36 +12,86 @@
 
 #include <iostream>
 #include <cmath>
-#include "math.h"
 #include "HashTable.h"
 
 HashTable::HashTable() {
 	table = new Item*[TABLE_SIZE];
 
-	//Using MAD compression map, therefore we need factors a and b
+	// Using MAD compression map, therefore we need factors a and b
 	factor_a = 7;
 	factor_b = 13;
 }
 
 int HashTable::hashfunction(int key_) {
-	int index = (factor_a * key_ + factor_b) % TABLE_SIZE;          //compute the hash of the key using MAD compression (see slides)
+	int index = (factor_a * key_ + factor_b) % TABLE_SIZE;          // compute the hash of the key using MAD compression (see slides)
 	return index;
 }
 
 void HashTable::put(Item* item) {
-	//TODO: fill in your code here
+	int h = hashfunction(item->getKey());
+
+	// linear probing
+	while ((h < TABLE_SIZE) && (table[h] != NULL)) {
+		h++;
+	}
+
+	// If overflow was detected
+	if (h >= TABLE_SIZE) {
+		std::cerr << "Error: HashTable Overflow! Could not save item (" << item->getKey() << ", " << item->getName() << ")." << std::endl;
+		return;
+	}
+
+	table[h] = item;
 }
 
 Item* HashTable::get(int key_) {
-	//TODO: fill in your code here
+	int h = hashfunction(key_);
+
+	Item* ret = table[h++];
+	while ((h < TABLE_SIZE) && (ret != NULL) && (ret->getKey() != key_)) {
+		ret = table[h++];
+	}
+
+	// If overflow was detected
+	if ((h >= TABLE_SIZE) && (ret != NULL) && (ret->getKey() != key_)) {
+		ret = NULL;
+	}
+
+	return ret;
 }
 
 void HashTable::putQuadratic(Item* item) {
-	//TODO: fill in your code here
+	int h;
+	int j = 0;
+
+	while (j < TABLE_SIZE) {
+		h = hashfunction(item->getKey() + j * j);
+		if (table[h] == NULL) {
+			table[h] = item;
+			return;
+		}
+		j++;
+	}
+
+	std::cerr << "Error: HashTable Overflow! Could not save item (" << item->getKey() << ", " << item->getName() << ")." << std::endl;
 }
 
 Item* HashTable::getQuadratic(int key_) {
-	//TODO: fill in your code here
+	int h;
+	int j = 0;
+
+	Item* ret = NULL;
+	while (j < TABLE_SIZE) {
+		h = hashfunction(key_ + j * j);
+
+		if ((table[h] == NULL) || (table[h]->getKey() == key_)) {
+			return table[h];
+		}
+
+		j++;
+	}
+
+	return ret;
 }
 
 void HashTable::printContent() {

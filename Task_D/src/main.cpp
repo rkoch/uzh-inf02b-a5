@@ -27,7 +27,7 @@ using std::flush;
 #define LENGTH 50000
 
 void printSortResults(const string pAlgorithm, clock_t &pStart, clock_t &pEnd, vector<int> &pSortedList);
-void printList(vector<int> &pList);
+void printList(const string pTitle, vector<int> &pList);
 
 int main(int argc, const char *argv[]) {
 	srand(getpid());
@@ -43,8 +43,7 @@ int main(int argc, const char *argv[]) {
 	vector<int> list_bucket(list_selection);
 	vector<int> list_radix(list_selection);
 
-	cout << "List before sorting: " << endl;
-	printList(list_selection);
+	printList("List before sorting", list_selection);
 
 	// Selection sort
 	clock_t cBegin = clock();
@@ -110,12 +109,12 @@ void printSortResults(const string pAlgorithm, clock_t &pStart, clock_t &pEnd, v
 	cout << pAlgorithm << " took " << 1000.0 * double(pEnd - pStart) / CLOCKS_PER_SEC << "ms" << endl;
 
 	// Print sorted list
-	cout << "List after " << pAlgorithm << ": " << endl;
-	printList(pSortedList);
+	printList("List after " + pAlgorithm, pSortedList);
 
 }
 
-void printList(vector<int> &pList) {
+void printList(const string pTitle, vector<int> &pList) {
+//	cout << pTitle << ": " << endl;
 //	for (int i = 0; i < LENGTH; i++) {
 //		cout << pList[i] << " " << flush;
 //	}
